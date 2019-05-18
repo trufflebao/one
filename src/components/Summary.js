@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ReactWordcloud from 'react-wordcloud';
+
 import Nav from './Nav';
 
 import '../styles/Summary.css';
@@ -8,12 +10,14 @@ class Summary extends Component {
     super();
     this.state = {
       entries: [],
+      words: [],
       colors: [],
     };
   }
 
   setDefaultState = () => {
     const {entries} = this.props;
+    //grab colors and its ratio
     const colors = entries.reduce((acc, cur) => {
       acc.push(cur.color.name);
       return acc;
@@ -21,9 +25,7 @@ class Summary extends Component {
     const uniqueColors = Array.from(new Set(colors));
     const uniqueColorRatio = uniqueColors.map(color => {
       const count = colors.reduce((acc, cur) => {
-        if (color === cur) {
-          acc += 1;
-        }
+        if (color === cur) acc += 1;
         return acc;
       }, 0);
       const ratio = (count / colors.length) * 100;
@@ -32,7 +34,25 @@ class Summary extends Component {
         ratio: `${ratio}%`,
       };
     });
-    this.setState({entries, colors: uniqueColorRatio});
+    //grab words from entries and count
+    const allWords = entries.reduce((acc, cur) => {
+      const textNoPeriod = cur.text.substring(0, cur.text.length - 1);
+      const words = textNoPeriod.split(' ');
+      acc.push(...words);
+      return acc;
+    }, []);
+    const uniqueWords = Array.from(new Set(allWords));
+    const uniqueWordsValue = uniqueWords.map(word => {
+      const count = allWords.reduce((acc, cur) => {
+        if (word === cur) acc += 1;
+        return acc;
+      }, 0);
+      return {
+        text: word,
+        value: count,
+      };
+    });
+    this.setState({entries, colors: uniqueColorRatio, words: uniqueWordsValue});
   };
 
   componentDidMount() {
@@ -49,8 +69,13 @@ class Summary extends Component {
   }
 
   render() {
-    const {entries, colors} = this.state;
-    console.log(colors);
+    const {entries, colors, words} = this.state;
+    const maxWords = 30;
+    const options = {
+      rotations: 0,
+      fontSizes: [50, 200],
+      fontFamily: 'Courier New',
+    };
     if (!colors.length || !entries.length) return <div />;
     return (
       <div
@@ -70,7 +95,9 @@ class Summary extends Component {
         className="summary-container"
       >
         <Nav />
-        hi
+        <div className="wordcloud-container">
+          <ReactWordcloud words={words} maxWords={maxWords} options={options} />
+        </div>
       </div>
     );
   }
