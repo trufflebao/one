@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import JournalEntry from './JournalEntry';
 import Nav from './Nav';
 import Summary from './Summary';
+import Map from './Map';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 
@@ -77,6 +78,10 @@ class App extends Component {
         <Route
           path="/summary/:word"
           render={props => <Summary props={props} entries={entries} />}
+        />
+        <Route
+          path="/map"
+          render={props => <Map props={props} entries={entries} />}
         />
       </div>
     );
