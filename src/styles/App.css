@@ -49,10 +49,6 @@ div {
   background-image: linear-gradient(to bottom right, violet, transparent);
 }
 
-.vermilion-background {
-  background-image: linear-gradient(to bottom right, #e34234, transparent);
-}
-
-.amber-background {
-  background-image: linear-gradient(to bottom right, #ffbf00, transparent);
+.crimson-background {
+  background-image: linear-gradient(to bottom right, crimson, transparent);
 }

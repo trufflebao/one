@@ -58,7 +58,6 @@ class JournalEntry extends Component {
       const submittedEntry = this.props.entries.filter(
         entry => entry.date === this.state.date
       )[0];
-      clearInterval(this.interval);
       this.setState({submittedEntry});
     }
   }
@@ -82,6 +81,7 @@ class JournalEntry extends Component {
     const {entry, date, time, submittedEntry} = this.state;
 
     if (submittedEntry) {
+      clearInterval(this.interval);
       return (
         <div
           className={`${
@@ -141,8 +141,8 @@ class JournalEntry extends Component {
               Submit
             </button>
             <div className="date-container">
-              <p>{date}</p>
-              <p>{time}</p>
+              <h3>{date}</h3>
+              <h3>{time}</h3>
             </div>
           </div>
         </div>

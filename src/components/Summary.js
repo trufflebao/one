@@ -61,7 +61,6 @@ class Summary extends Component {
   };
 
   onWordClick = word => {
-    console.log(word.text);
     this.props.props.history.push(`/summary/${word.text}`);
   };
 
@@ -95,27 +94,28 @@ class Summary extends Component {
         entry.text.includes(match.params.word)
       );
       const displayColors = displaySentences.reduce((acc, cur) => {
-        acc.push(cur.color.name);
+          acc.push(cur.color.name);
         return acc;
       }, []);
-      const backgroundColors = this.getColorsRatio(displayColors).sort(
+      const selectedBackgroundColors = this.getColorsRatio(displayColors).sort(
         (a, b) => b.ratio - a.ratio
       );
+      console.log(selectedBackgroundColors);
       return (
         <div
           className="summary-container"
           style={{
             backgroundImage: `linear-gradient(to bottom right, ${
-              backgroundColors[0].name
-            } ${backgroundColors[0].ratio}%, transparent),
-        linear-gradient(to bottom left, ${backgroundColors[1].name} ${
-              backgroundColors[1].ratio
+              selectedBackgroundColors[0].name
+            } ${selectedBackgroundColors[0].ratio}%, transparent),
+        linear-gradient(to bottom left, ${selectedBackgroundColors[1].name} ${
+              selectedBackgroundColors[1].ratio
             }%, transparent),
-        linear-gradient(to top right, ${backgroundColors[2].name} ${
-              backgroundColors[2].ratio
+        linear-gradient(to top right, ${selectedBackgroundColors[2].name} ${
+              selectedBackgroundColors[2].ratio
             }%, transparent),
-        linear-gradient(to top left, ${backgroundColors[3].name} ${
-              backgroundColors[3].ratio
+        linear-gradient(to top left, ${selectedBackgroundColors[3].name} ${
+              selectedBackgroundColors[3].ratio
             }%, transparent)`,
             backgroundBlendMode: 'screen',
           }}
