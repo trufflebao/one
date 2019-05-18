@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const {colors, currentColor, entries} = this.state;
+    const {colors, currentColor, entries, submitted} = this.state;
     return (
       <div
         className={`d-flex flex-column app-container ${
@@ -60,6 +60,8 @@ class App extends Component {
               handleChangeColor={this.handleChangeColor}
               currentColor={currentColor}
               handleSubmit={this.handleSubmit}
+              submitted={submitted}
+              entries={entries}
             />
           )}
         />

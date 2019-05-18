@@ -10,6 +10,7 @@ class JournalEntry extends Component {
       entry: '',
       date: '',
       time: '',
+      submittedEntry: '',
     };
   }
 
@@ -38,7 +39,28 @@ class JournalEntry extends Component {
 
   componentDidMount() {
     this.getDateTime();
-    this.interval = setInterval(() => this.getDateTime(), 1000);
+    if (this.props.entries[0]) {
+      const submittedEntry = this.props.entries.filter(
+        entry => entry.date === this.state.date
+      )[0];
+      this.setState({submittedEntry});
+    } else {
+      this.interval = setInterval(() => this.getDateTime(), 1000);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      JSON.stringify(JSON.stringify(prevProps)) !==
+        JSON.stringify(JSON.stringify(this.props)) ||
+      prevState.date !== this.state.date
+    ) {
+      const submittedEntry = this.props.entries.filter(
+        entry => entry.date === this.state.date
+      )[0];
+      clearInterval(this.interval);
+      this.setState({submittedEntry});
+    }
   }
 
   componentWillUnmount() {
@@ -54,48 +76,77 @@ class JournalEntry extends Component {
       handleChangeColor,
       currentColor,
       handleSubmit,
+      entries,
     } = this.props;
-    const {entry, date, time} = this.state;
+    if (!entries[0]) return <div />;
+    const {entry, date, time, submittedEntry} = this.state;
 
-    return (
-      <div>
-        <Nav />
-        <div className="container-fluid entry-container">
-          <div>Location</div>
-          <div>
-            <form className="d-flex flex-column justify-content-center">
-              <input
-                type="text"
-                value={entry}
-                onChange={evt => this.handleChangeInput(evt)}
-              />
-            </form>
-          </div>
-          <div>
-            {colors.map(color => (
-              <button
-                className={`${color.name} ${
-                  color.name === currentColor ? 'active' : ''
-                }`}
-                key={color.id}
-                onClick={evt => handleChangeColor(evt, color.id)}
-              >
-                {color.name}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={() => handleSubmit({text: entry, date: date, time: time})}
-          >
-            Submit
-          </button>
-          <div className="date-container">
-            <p>{date}</p>
-            <p>{time}</p>
+    if (submittedEntry) {
+      return (
+        <div
+          className={`${
+            submittedEntry.color.name
+              ? `${submittedEntry.color.name}-background`
+              : ''
+          }`}
+          style={{width: '100vw', height: '100vh'}}
+        >
+          <Nav />
+          <div className="container-fluid entry-container">
+            <div>Location</div>
+            <div style={{marginTop: '15px'}}>
+              <h3>{submittedEntry.text}</h3>
+            </div>
+            <div className="date-container">
+              <p>{submittedEntry.date}</p>
+              <p>{submittedEntry.time}</p>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <Nav />
+          <div className="container-fluid entry-container">
+            <div>Location</div>
+            <div>
+              <form className="d-flex flex-column justify-content-center">
+                <input
+                  type="text"
+                  value={entry}
+                  onChange={evt => this.handleChangeInput(evt)}
+                />
+              </form>
+            </div>
+            <div>
+              {colors.map(color => (
+                <button
+                  className={`${color.name} ${
+                    color.name === currentColor ? 'active' : ''
+                  }`}
+                  key={color.id}
+                  onClick={evt => handleChangeColor(evt, color.id)}
+                >
+                  {color.name}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() =>
+                handleSubmit({text: entry, date: date, time: time})
+              }
+            >
+              Submit
+            </button>
+            <div className="date-container">
+              <p>{date}</p>
+              <p>{time}</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

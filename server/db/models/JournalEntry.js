@@ -7,10 +7,10 @@ const JournalEntry = db.define('entry', {
     isEmpty: false,
   },
   date: {
-    type: db.Sequelize.DATE,
+    type: db.Sequelize.STRING,
   },
   time: {
-    type: db.Sequelize.TIME,
+    type: db.Sequelize.STRING,
   },
   location: {
     type: db.Sequelize.STRING,
