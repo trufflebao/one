@@ -15,13 +15,8 @@ class Summary extends Component {
     };
   }
 
-  setDefaultState = () => {
-    const {entries} = this.props;
+  getColorsRatio = colors => {
     //grab colors and its ratio
-    const colors = entries.reduce((acc, cur) => {
-      acc.push(cur.color.name);
-      return acc;
-    }, []);
     const uniqueColors = Array.from(new Set(colors));
     const uniqueColorRatio = uniqueColors.map(color => {
       const count = colors.reduce((acc, cur) => {
@@ -31,9 +26,19 @@ class Summary extends Component {
       const ratio = (count / colors.length) * 100;
       return {
         name: color,
-        ratio: `${ratio}%`,
+        ratio: ratio,
       };
     });
+    return uniqueColorRatio;
+  };
+
+  setDefaultState = () => {
+    const {entries} = this.props;
+    const colors = entries.reduce((acc, cur) => {
+      acc.push(cur.color.name);
+      return acc;
+    }, []);
+    const uniqueColorRatio = this.getColorsRatio(colors);
     //grab words from entries and count
     const allWords = entries.reduce((acc, cur) => {
       const textNoPeriod = cur.text.substring(0, cur.text.length - 1);
@@ -55,6 +60,11 @@ class Summary extends Component {
     this.setState({entries, colors: uniqueColorRatio, words: uniqueWordsValue});
   };
 
+  onWordClick = word => {
+    console.log(word.text);
+    this.props.props.history.push(`/summary/${word.text}`);
+  };
+
   componentDidMount() {
     this.setDefaultState();
   }
@@ -69,6 +79,7 @@ class Summary extends Component {
   }
 
   render() {
+    const {match} = this.props.props;
     const {entries, colors, words} = this.state;
     const maxWords = 30;
     const options = {
@@ -76,30 +87,82 @@ class Summary extends Component {
       fontSizes: [50, 200],
       fontFamily: 'Courier New',
     };
+    const callbacks = {onWordClick: this.onWordClick};
+
     if (!colors.length || !entries.length) return <div />;
-    return (
-      <div
-        style={{
-          backgroundImage: `
-          linear-gradient(to bottom right, red ${colors[0].ratio}, transparent),
-          linear-gradient(to bottom left, purple ${
-            colors[4].ratio
-          }, transparent),
-          linear-gradient(to top right, blue ${colors[3].ratio}, transparent),
-          linear-gradient(to top left, yellow ${colors[1].ratio}, transparent),
-          linear-gradient(to left, green ${colors[2].ratio},transparent),
-          linear-gradient(to right, orange ${colors[2].ratio},transparent)
-          `,
-          backgroundBlendMode: 'screen',
-        }}
-        className="summary-container"
-      >
-        <Nav />
-        <div className="wordcloud-container">
-          <ReactWordcloud words={words} maxWords={maxWords} options={options} />
+    if (match.params.word) {
+      const displaySentences = entries.filter(entry =>
+        entry.text.includes(match.params.word)
+      );
+      const displayColors = displaySentences.reduce((acc, cur) => {
+        acc.push(cur.color.name);
+        return acc;
+      }, []);
+      const backgroundColors = this.getColorsRatio(displayColors).sort(
+        (a, b) => b.ratio - a.ratio
+      );
+      return (
+        <div
+          className="summary-container"
+          style={{
+            backgroundImage: `linear-gradient(to bottom right, ${
+              backgroundColors[0].name
+            } ${backgroundColors[0].ratio}%, transparent),
+        linear-gradient(to bottom left, ${backgroundColors[1].name} ${
+              backgroundColors[1].ratio
+            }%, transparent),
+        linear-gradient(to top right, ${backgroundColors[2].name} ${
+              backgroundColors[2].ratio
+            }%, transparent),
+        linear-gradient(to top left, ${backgroundColors[3].name} ${
+              backgroundColors[3].ratio
+            }%, transparent)`,
+            backgroundBlendMode: 'screen',
+          }}
+        >
+          <Nav />
+          <div className="overflow-container">
+            <ul>
+              {displaySentences.map(displaySentence => (
+                <li key={displaySentence.id}>{displaySentence.text}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      const backgroundColors = colors.sort((a, b) => b.ratio - a.ratio);
+      return (
+        <div
+          className="summary-container"
+          style={{
+            backgroundImage: `linear-gradient(to bottom right, ${
+              backgroundColors[0].name
+            } ${backgroundColors[0].ratio}%, transparent),
+      linear-gradient(to bottom left, ${backgroundColors[1].name} ${
+              backgroundColors[1].ratio
+            }%, transparent),
+      linear-gradient(to top right, ${backgroundColors[2].name} ${
+              backgroundColors[2].ratio
+            }%, transparent),
+      linear-gradient(to top left, ${backgroundColors[3].name} ${
+              backgroundColors[3].ratio
+            }%, transparent)`,
+            backgroundBlendMode: 'screen',
+          }}
+        >
+          <Nav />
+          <div className="wordcloud-container">
+            <ReactWordcloud
+              words={words}
+              maxWords={maxWords}
+              options={options}
+              callbacks={callbacks}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 }
 

@@ -1,10 +1,17 @@
-.summary-container{
-  width:100vw;
-  height:100vh;
+.summary-container {
+  width: 100vw;
+  height: 100vh;
+  display:flex;
+  flex-direction: column
 }
 
-.wordcloud-container{
-  width:100vw;
-  height:60vh;
-  margin-top:10vh;
+.wordcloud-container {
+  width: 100vw;
+  height: 60vh;
+  margin-top: 10vh;
+}
+
+.overflow-container {
+  position: relative;
+  overflow: auto;
 }

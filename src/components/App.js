@@ -70,7 +70,12 @@ class App extends Component {
           )}
         />
         <Route
+          exact
           path="/summary"
+          render={props => <Summary props={props} entries={entries} />}
+        />
+        <Route
+          path="/summary/:word"
           render={props => <Summary props={props} entries={entries} />}
         />
       </div>

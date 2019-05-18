@@ -5,11 +5,11 @@ import '../styles/Nav.css';
 
 const Nav = props => {
   return (
-    <div className="container-fluid nav-container">
+    <div className="nav-container">
       <div>
         <h1 className='logo'>ONE</h1>
       </div>
-      <div className="container-fluid menu-container">
+      <div className="menu-container">
         <NavLink exact to="/" className="link">
           <h4 style={{marginLeft: '10px', marginRight: '10px'}}>Entry</h4>
         </NavLink>
