@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Nav from './Nav';
 
 import '../styles/JournalEntry.css';
 
@@ -57,34 +58,41 @@ class JournalEntry extends Component {
     const {entry, date, time} = this.state;
 
     return (
-      <div className="container-fluid entry-container">
-        <div>Location</div>
-        <div>
-          <form className="d-flex flex-column justify-content-center">
-            <input
-              type="text"
-              value={entry}
-              onChange={evt => this.handleChangeInput(evt)}
-            />
-          </form>
-        </div>
-        <div>
-          {colors.map(color => (
-            <button
-              className={`${color.name} ${
-                color.name === currentColor ? 'active' : ''
-              }`}
-              key={color.id}
-              onClick={evt => handleChangeColor(evt,color.id)}
-            >
-              {color.name}
-            </button>
-          ))}
-        </div>
-        <button onClick={() => handleSubmit({text:entry,date:date,time:time})}>Submit</button>
-        <div className="date-container">
-          <p>{date}</p>
-          <p>{time}</p>
+      <div>
+        <Nav />
+        <div className="container-fluid entry-container">
+          <div>Location</div>
+          <div>
+            <form className="d-flex flex-column justify-content-center">
+              <input
+                type="text"
+                value={entry}
+                onChange={evt => this.handleChangeInput(evt)}
+              />
+            </form>
+          </div>
+          <div>
+            {colors.map(color => (
+              <button
+                className={`${color.name} ${
+                  color.name === currentColor ? 'active' : ''
+                }`}
+                key={color.id}
+                onClick={evt => handleChangeColor(evt, color.id)}
+              >
+                {color.name}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => handleSubmit({text: entry, date: date, time: time})}
+          >
+            Submit
+          </button>
+          <div className="date-container">
+            <p>{date}</p>
+            <p>{time}</p>
+          </div>
         </div>
       </div>
     );

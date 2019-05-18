@@ -34,7 +34,9 @@ class App extends Component {
     try {
       const resolvedColors = await axios.get('/api/colors');
       const colors = resolvedColors.data;
-      this.setState({colors});
+      const resolvedEntries = await axios.get('/api/journalentries');
+      const entries = resolvedEntries.data;
+      this.setState({entries, colors});
     } catch (err) {
       console.log(`app componentdidmount error: ${err}`);
     }
@@ -48,7 +50,6 @@ class App extends Component {
           currentColor !== '' ? `${currentColor}-background` : ''
         }`}
       >
-        <Nav />
         <Route
           exact
           path="/"
@@ -64,9 +65,7 @@ class App extends Component {
         />
         <Route
           path="/summary"
-          render={props => (
-            <Summary props={props} entries={entries} />
-          )}
+          render={props => <Summary props={props} entries={entries} />}
         />
       </div>
     );
