@@ -6,7 +6,20 @@ const faker = require('faker');
 Color.hasMany(JournalEntry);
 JournalEntry.belongsTo(Color);
 
-const colors = ['red', 'yellow', 'blue', 'purple', 'green'];
+const colors = [
+  'red',
+  'yellow',
+  'blue',
+  'purple',
+  'green',
+  'orange',
+  'amber',
+  'chartreuse',
+  'vermilion',
+  'teal',
+  'violet',
+  'magenta',
+];
 const entries = [];
 
 const makeFakeEntries = () => {
@@ -32,7 +45,7 @@ const syncAndSeed = async isForced => {
       async entry =>
         await entry.setColor(Math.ceil(Math.random() * resolvedColors.length))
     );
-    console.log('db seeded')
+    console.log('db seeded');
   } catch (err) {
     console.log(`db error: ${err}`);
   }

@@ -29,6 +29,30 @@ div {
   background-image: linear-gradient(to bottom right, green, transparent);
 }
 
-.tint {
-  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);
+.orange-background {
+  background-image: linear-gradient(to bottom right, orange, transparent);
+}
+
+.teal-background {
+  background-image: linear-gradient(to bottom right, teal, transparent);
+}
+
+.chartreuse-background {
+  background-image: linear-gradient(to bottom right, chartreuse, transparent);
+}
+
+.magenta-background {
+  background-image: linear-gradient(to bottom right, magenta, transparent);
+}
+
+.violet-background {
+  background-image: linear-gradient(to bottom right, violet, transparent);
+}
+
+.vermilion-background {
+  background-image: linear-gradient(to bottom right, #e34234, transparent);
+}
+
+.amber-background {
+  background-image: linear-gradient(to bottom right, #ffbf00, transparent);
 }

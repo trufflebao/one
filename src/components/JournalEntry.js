@@ -136,6 +136,7 @@ class JournalEntry extends Component {
               onClick={() =>
                 handleSubmit({text: entry, date: date, time: time})
               }
+              disabled={entry === '' || currentColor === ''}
             >
               Submit
             </button>
