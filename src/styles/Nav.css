@@ -1,0 +1,27 @@
+.nav-container{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  border-top: solid 1px lightgray;
+}
+
+.link{
+  text-decoration: none;
+  color:black;
+}
+
+.link:hover{
+  text-decoration: none;
+  color:black;
+  border-bottom: 1px solid lightgray;
+}

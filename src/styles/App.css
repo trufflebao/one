@@ -1,0 +1,34 @@
+div {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+}
+
+.red-background {
+  background-image: linear-gradient(to bottom right, red, transparent);
+}
+
+.yellow-background {
+  background-image: linear-gradient(to bottom right, yellow, transparent);
+}
+
+.blue-background {
+  background-image: linear-gradient(to bottom right, blue, transparent);
+}
+
+.purple-background {
+  background-image: linear-gradient(to bottom right, purple, transparent);
+}
+
+.green-background {
+  background-image: linear-gradient(to bottom right, green, transparent);
+}
+
+.tint {
+  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(180deg);
+}
