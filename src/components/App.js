@@ -24,10 +24,14 @@ class App extends Component {
   };
 
   handleSubmit = async input => {
-    const {currentColorId, entries} = this.state;
+    const {currentColorId, entries, colors} = this.state;
     const entryInput = {...input, colorId: currentColorId};
-    const newEntry = await axios.post('/api/journalentries', entryInput);
-    this.setState({entries: [...entries, newEntry.data]});
+    const newEntry = await axios
+      .post('/api/journalentries', entryInput)
+      .then(res => res.data);
+    const newEntryColor = colors.find(color => color.id === newEntry.colorId);
+    const newEntryState = {...newEntry, color: newEntryColor};
+    this.setState({entries: [...entries, newEntryState]});
   };
 
   async componentDidMount() {
