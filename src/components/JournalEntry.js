@@ -93,13 +93,13 @@ class JournalEntry extends Component {
         >
           <Nav />
           <div className="container-fluid entry-container">
-            <div>Location</div>
+            {/* <div>Location</div> */}
             <div style={{marginTop: '15px'}}>
-              <h3>{submittedEntry.text}</h3>
+              <h1>{submittedEntry.text}</h1>
             </div>
             <div className="date-container">
-              <p>{submittedEntry.date}</p>
-              <p>{submittedEntry.time}</p>
+              <h3>{submittedEntry.date}</h3>
+              <h3>{submittedEntry.time}</h3>
             </div>
           </div>
         </div>

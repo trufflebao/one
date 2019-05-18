@@ -7,10 +7,10 @@ const Nav = props => {
   return (
     <div className="container-fluid nav-container">
       <div>
-        <h1>ONE</h1>
+        <h1 className='logo'>ONE</h1>
       </div>
       <div className="container-fluid menu-container">
-        <NavLink to="/" className="link">
+        <NavLink exact to="/" className="link">
           <h4 style={{marginLeft: '10px', marginRight: '10px'}}>Entry</h4>
         </NavLink>
         <NavLink to="/summary" className="link">

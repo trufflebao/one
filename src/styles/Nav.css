@@ -1,12 +1,12 @@
-.nav-container{
-  display:flex;
+.nav-container {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.menu-container{
-  display:flex;
+.menu-container {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -15,13 +15,25 @@
   border-top: solid 1px lightgray;
 }
 
-.link{
+.link {
   text-decoration: none;
-  color:black;
+  color: black;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-.link:hover{
+.link:hover {
   text-decoration: none;
-  color:black;
-  border-bottom: 1px solid lightgray;
+  color: black;
+  border-bottom: 1px solid black;
+}
+
+.menu-container .active {
+  border-bottom: 1px solid black;
+}
+
+.logo {
+  font-size: 120px;
+  padding: 0px;
+  margin: 0px;
 }
