@@ -81,7 +81,7 @@ class JournalEntry extends Component {
             </button>
           ))}
         </div>
-        <button onClick={() => handleSubmit({name:entry,date:date,time:time})}>Submit</button>
+        <button onClick={() => handleSubmit({text:entry,date:date,time:time})}>Submit</button>
         <div className="date-container">
           <p>{date}</p>
           <p>{time}</p>

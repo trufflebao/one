@@ -1,7 +1,7 @@
 const db = require('../db');
 
 const JournalEntry = db.define('entry', {
-  name: {
+  text: {
     type: db.Sequelize.STRING,
     allowNull: false,
     isEmpty: false,

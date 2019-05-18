@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import JournalEntry from './JournalEntry';
 import Nav from './Nav';
+import Summary from './Summary';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 
@@ -40,8 +41,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.entries);
-    const {colors, currentColor} = this.state;
+    const {colors, currentColor, entries} = this.state;
     return (
       <div
         className={`d-flex flex-column app-container ${
@@ -60,6 +60,12 @@ class App extends Component {
               currentColor={currentColor}
               handleSubmit={this.handleSubmit}
             />
+          )}
+        />
+        <Route
+          path="/summary"
+          render={props => (
+            <Summary props={props} entries={entries} />
           )}
         />
       </div>

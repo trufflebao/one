@@ -1,9 +1,12 @@
 const router = require('express').Router();
-const {JournalEntry} = require('../db/index');
+const {JournalEntry, Color} = require('../db/index');
 
 router.get('/', async (req, res, next) => {
   try {
-    const journalEntries = await JournalEntry.findAll({order: [['id', 'ASC']]});
+    const journalEntries = await JournalEntry.findAll({
+      order: [['id', 'ASC']],
+      include: [{model: Color}],
+    });
     res.json(journalEntries);
   } catch (err) {
     next(err);
